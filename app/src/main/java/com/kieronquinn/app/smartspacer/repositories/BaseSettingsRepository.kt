@@ -2,7 +2,7 @@ package com.kieronquinn.app.smartspacer.repositories
 
 import android.content.SharedPreferences
 import android.graphics.Color
-import com.google.common.reflect.TypeToken
+import com.google.gson.reflect.TypeToken
 import com.google.gson.Gson
 import com.kieronquinn.app.smartspacer.repositories.BaseSettingsRepository.SmartspacerSetting
 import com.kieronquinn.app.smartspacer.repositories.BaseSettingsRepositoryImpl.SettingsConverters.DESERIALIZE_BOOLEAN

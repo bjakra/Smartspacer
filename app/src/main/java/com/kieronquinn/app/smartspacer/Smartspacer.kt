@@ -64,8 +64,6 @@ import com.kieronquinn.app.smartspacer.repositories.ExpandedRepository
 import com.kieronquinn.app.smartspacer.repositories.ExpandedRepositoryImpl
 import com.kieronquinn.app.smartspacer.repositories.FlashlightRepository
 import com.kieronquinn.app.smartspacer.repositories.FlashlightRepositoryImpl
-import com.kieronquinn.app.smartspacer.repositories.GeofenceRepository
-import com.kieronquinn.app.smartspacer.repositories.GeofenceRepositoryImpl
 import com.kieronquinn.app.smartspacer.repositories.GmailRepository
 import com.kieronquinn.app.smartspacer.repositories.GmailRepositoryImpl
 import com.kieronquinn.app.smartspacer.repositories.GoogleWeatherRepository
@@ -162,10 +160,6 @@ import com.kieronquinn.app.smartspacer.ui.screens.configuration.default.DefaultT
 import com.kieronquinn.app.smartspacer.ui.screens.configuration.default.DefaultTargetConfigurationViewModelImpl
 import com.kieronquinn.app.smartspacer.ui.screens.configuration.flashlight.FlashlightTargetConfigurationViewModel
 import com.kieronquinn.app.smartspacer.ui.screens.configuration.flashlight.FlashlightTargetConfigurationViewModelImpl
-import com.kieronquinn.app.smartspacer.ui.screens.configuration.geofence.GeofenceRequirementConfigurationViewModel
-import com.kieronquinn.app.smartspacer.ui.screens.configuration.geofence.GeofenceRequirementConfigurationViewModelImpl
-import com.kieronquinn.app.smartspacer.ui.screens.configuration.geofence.name.GeofenceRequirementConfigurationNameViewModel
-import com.kieronquinn.app.smartspacer.ui.screens.configuration.geofence.name.GeofenceRequirementConfigurationNameViewModelImpl
 import com.kieronquinn.app.smartspacer.ui.screens.configuration.gmail.GmailComplicationConfigurationViewModel
 import com.kieronquinn.app.smartspacer.ui.screens.configuration.gmail.GmailComplicationConfigurationViewModelImpl
 import com.kieronquinn.app.smartspacer.ui.screens.configuration.greeting.GreetingConfigurationViewModel
@@ -375,11 +369,6 @@ class Smartspacer: Application(), Configuration.Provider {
         single<DatabaseRepository> { DatabaseRepositoryImpl(get()) }
         single<RequirementsRepository> { RequirementsRepositoryImpl(get(), get()) }
         single<MediaRepository>(createdAtStart = true) { MediaRepositoryImpl(get()) }
-        single<GeofenceRepository>(createdAtStart = true) { GeofenceRepositoryImpl(
-            get(),
-            get(),
-            get()
-        ) }
         single { SmartspacerDatabase.getDatabase(get()) }
         single<WidgetRepository> { WidgetRepositoryImpl(get(), get()) }
         single<GrantRepository>(createdAtStart = true) { GrantRepositoryImpl(get()) }
@@ -423,8 +412,6 @@ class Smartspacer: Application(), Configuration.Provider {
         viewModel<ComplicationsRequirementsPageViewModel> { ComplicationsRequirementsPageViewModelImpl(get(), get(), get(), get()) }
         viewModel<ComplicationsRequirementsAddViewModel> { ComplicationsRequirementsAddViewModelImpl(get(), get(), get(), get()) }
         viewModel<TimeDateConfigurationViewModel> { TimeDateConfigurationViewModelImpl(get(), get()) }
-        viewModel<GeofenceRequirementConfigurationViewModel> { GeofenceRequirementConfigurationViewModelImpl(get(), get(), get(), get()) }
-        viewModel<GeofenceRequirementConfigurationNameViewModel> { GeofenceRequirementConfigurationNameViewModelImpl() }
         viewModel<AppPredictionRequirementConfigurationViewModel> { AppPredictionRequirementConfigurationViewModelImpl(get(), get()) }
         viewModel<SettingsViewModel> { SettingsViewModelImpl(get(), get(), get(), get()) }
         viewModel { SettingsHideSensitiveViewModel(get()) }

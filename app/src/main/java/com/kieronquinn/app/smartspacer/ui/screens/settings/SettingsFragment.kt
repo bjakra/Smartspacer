@@ -175,13 +175,6 @@ class SettingsFragment: BaseSettingsFragment(), Root, CanShowSnackbar {
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_updates),
             onChanged = viewModel::onCheckForUpdatesChanged
         ),
-        SwitchSetting(
-            enableAnalytics,
-            getString(R.string.settings_enable_analytics_title),
-            getString(R.string.settings_enable_analytics_content),
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_settings_analytics),
-            onChanged = viewModel::onEnableAnalyticsChanged
-        ),
         if (blurAvailable != null) {
             SwitchSetting(
                 blurEnabled && blurAvailable,

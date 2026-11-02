@@ -1,11 +1,8 @@
 package com.kieronquinn.app.smartspacer.utils.extensions
 
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import android.util.Log
 
+// Graphite: no Firebase, errors only go to the local log
 fun logNonFatal(exception: Exception) {
-    try {
-        FirebaseCrashlytics.getInstance().recordException(exception)
-    }catch (e: NullPointerException){
-        //Crashlytics is disabled
-    }
+    Log.w("Smartspacer", "Non-fatal error", exception)
 }

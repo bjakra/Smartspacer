@@ -111,10 +111,6 @@ class ConfigurationActivity: MonetCompatActivity() {
             ".ui.activities.configuration.requirement.appprediction.AppPredictionRequirementConfigurationActivity",
             R.navigation.nav_graph_configure_requirement_app_prediction
         ),
-        REQUIREMENT_GEOFENCE(
-            ".ui.activities.configuration.requirement.geofence.GeofenceRequirementConfigurationActivity",
-            R.navigation.nav_graph_configure_requirement_geofence
-        ),
         REQUIREMENT_RECENT_TASK(
             ".ui.activities.configuration.requirement.recenttask.RecentTaskRequirementConfigurationActivity",
             R.navigation.nav_graph_configure_requirement_recent_task

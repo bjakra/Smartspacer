@@ -312,7 +312,8 @@ class SettingsViewModelImpl(
 
     override fun onLibrariesClicked() {
         viewModelScope.launch {
-            navigation.navigate(SettingsFragmentDirections.actionSettingsFragmentToOssLicensesMenuActivity())
+            // Graphite: Google's licence screen is gone, the project page lists the libraries
+            navigation.navigate(LINK_GITHUB.toIntent())
         }
     }
 

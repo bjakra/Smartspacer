@@ -18,7 +18,7 @@
         tools:layout="@layout/fragment_setup_landing">
         <action
             android:id="@+id/action_setupLandingFragment_to_setupAnalyticsFragment"
-            app:destination="@id/setupAnalyticsFragment" />
+            app:destination="@id/setupContainerFragment" />
     </fragment>
     <fragment
         android:id="@+id/setupContainerFragment"

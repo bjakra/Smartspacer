@@ -4,14 +4,10 @@ plugins {
     id 'com.google.devtools.ksp'
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs.kotlin'
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id 'dev.rikka.tools.refine'
     id 'com.google.protobuf'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
 }
 
-apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 def tagName = '1.11.4'
 def tagCode = 1114
@@ -43,11 +39,11 @@ android {
         aidl true
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = "21"
         freeCompilerArgs = ['-XXLanguage:+PropertyParamAnnotationDefaultTargetMode']
     }
     buildFeatures {
@@ -112,9 +108,6 @@ dependencies {
     //Bypass hidden API restrictions
     implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:6.1'
 
-    implementation 'com.google.android.gms:play-services-location:21.4.0'
-    implementation 'com.google.android.gms:play-services-maps:20.0.0'
-
     implementation 'com.github.KieronQuinn:MonetCompat:0.4.1'
     implementation 'com.google.code.gson:gson:2.14.0'
 
@@ -135,10 +128,6 @@ dependencies {
     //Image Loading
     implementation 'com.github.bumptech.glide:glide:5.0.9'
     ksp 'com.github.bumptech.glide:ksp:5.0.9'
-
-    implementation 'com.google.android.gms:play-services-location:21.4.0'
-    implementation 'com.google.android.gms:play-services-maps:20.0.0'
-    implementation 'com.google.maps.android:android-maps-utils:6.0.0'
     implementation 'me.saket:better-link-movement-method:2.2.0'
 
     implementation 'com.airbnb.android:lottie:6.7.1'
@@ -164,12 +153,6 @@ dependencies {
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
     //OSS libraries activity
-    implementation 'com.google.android.gms:play-services-oss-licenses:17.5.2'
-
-    //Firebase Analytics + Crashlytics
-    implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
-    implementation("com.google.firebase:firebase-crashlytics")
-    implementation("com.google.firebase:firebase-analytics")
 
     //Xposed for Discover replacement
     compileOnly("de.robv.android.xposed:api:82")
