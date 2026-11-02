@@ -2,6 +2,7 @@
 
 package com.kieronquinn.app.smartspacer.service
 
+import android.app.ActivityManager
 import android.annotation.SuppressLint
 import android.app.IActivityManager
 import android.app.IActivityTaskManager
@@ -62,7 +63,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import rikka.shizuku.SystemServiceHelper
 import java.util.concurrent.Executors
-import kotlin.system.exitProcess
 
 @Suppress("DEPRECATION")
 @SuppressLint("WrongConstant", "RestrictedApi")
@@ -72,7 +72,8 @@ class SmartspacerShizukuService: ISmartspacerShizukuService.Stub() {
         //5 crashes in 10 seconds will trigger safe mode if required
         private const val CRASH_COUNT = 5
         private const val CRASH_BUFFER = 10_000L
-        const val PACKAGE_SHELL = "com.android.shell"
+        // Graphite: runs inside the app, so calls identify as the app rather than the shell
+        const val PACKAGE_SHELL = BuildConfig.APPLICATION_ID
 
         const val ROOT_UID = Process.ROOT_UID
         const val SHELL_UID = Process.SHELL_UID
@@ -185,7 +186,7 @@ class SmartspacerShizukuService: ISmartspacerShizukuService.Stub() {
 
     private val attributionSource by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            AttributionSource.Builder(Process.SHELL_UID)
+            AttributionSource.Builder(Process.myUid())
                 .setPackageName(PACKAGE_SHELL)
                 .build()
         } else {
@@ -409,8 +410,8 @@ class SmartspacerShizukuService: ISmartspacerShizukuService.Stub() {
     }
 
     override fun destroy() {
+        // Graphite: this runs in the app's own process, which has to stay alive
         scope.cancel()
-        exitProcess(0)
     }
 
     private fun killPackages(
@@ -422,16 +423,21 @@ class SmartspacerShizukuService: ISmartspacerShizukuService.Stub() {
             if (canUseRoot) {
                 runCommand("pkill systemui")
             } else {
-                runCommand("am crash $PACKAGE_KEYGUARD")
+                forceStop(PACKAGE_KEYGUARD)
             }
         }
         packages.forEach {
-            runCommand("am force-stop $it")
+            forceStop(it)
         }
         scope.launch {
             delay(500L)
             suppressCrash = false
         }
+    }
+
+    private fun forceStop(packageName: String) = runWithClearedIdentity {
+        ActivityManager::class.java.getMethod("forceStopPackage", String::class.java)
+            .invoke(context.getSystemService(ActivityManager::class.java), packageName)
     }
 
     private fun runCommand(vararg commands: String) {

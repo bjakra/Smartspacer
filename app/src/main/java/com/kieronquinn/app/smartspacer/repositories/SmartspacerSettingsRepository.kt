@@ -401,7 +401,7 @@ class SmartspacerSettingsRepositoryImpl(
         private const val KEY_SHARED_PREFS_VERSION = "shared_prefs_version"
 
         private const val KEY_HAS_SEEN_SETUP = "has_seen_setup"
-        private const val DEFAULT_HAS_SEEN_SETUP = false
+        private const val DEFAULT_HAS_SEEN_SETUP = true
 
         private const val KEY_USER_NAME = "user_name"
         private const val DEFAULT_USER_NAME = ""
@@ -410,7 +410,7 @@ class SmartspacerSettingsRepositoryImpl(
         private const val DEFAULT_IS_RESTRICTED_MODE_DISABLED = false
 
         private const val KEY_ENHANCED_MODE = "enhanced_mode"
-        private const val DEFAULT_ENHANCED_MODE = false
+        private const val DEFAULT_ENHANCED_MODE = true
 
         private const val KEY_HAS_USED_NATIVE_MODE = "has_used_native_mode"
         private const val DEFAULT_HAS_USED_NATIVE_MODE = false

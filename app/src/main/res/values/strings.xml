@@ -1343,4 +1343,6 @@
     <string name="shizuku_outdated_negative">Not now</string>
     <string name="shizuku_outdated_neutral">Ignore</string>
 
+    <string name="complication_graphite_weather_label">Weather</string>
+    <string name="complication_graphite_weather_description">Shows the current weather from Graphite Weather</string>
 </resources>

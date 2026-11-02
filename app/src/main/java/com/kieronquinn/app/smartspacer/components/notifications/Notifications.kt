@@ -18,7 +18,8 @@ fun Context.createNotification(
         AndroidNotificationChannel(
             channel.id,
             getString(channel.titleRes),
-            channel.importance
+            // Graphite: off by default. Each channel can be turned on in the app's notification settings
+            NotificationManager.IMPORTANCE_NONE
         ).apply {
             description = getString(channel.descRes)
             channel.options(this)

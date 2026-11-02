@@ -11,14 +11,5 @@ import com.kieronquinn.app.smartspacer.service.SmartspacerShizukuService.Compani
 
 class ShellContext(context: Context, private val isRoot: Boolean) : ContextWrapper(context) {
 
-    override fun getOpPackageName(): String {
-        return "uid:${if(isRoot) ROOT_UID else SHELL_UID}"
-    }
-
-    @SuppressLint("NewApi")
-    override fun getAttributionSource(): AttributionSource {
-        val uid = if (isRoot) ROOT_UID else SHELL_UID
-        return AttributionSource.Builder(uid)
-            .setPackageName(if(isRoot) ROOT_PACKAGE else SHELL_PACKAGE).build()
-    }
+    // Graphite: the privileged service now runs as the app, so this reports the app itself
 }

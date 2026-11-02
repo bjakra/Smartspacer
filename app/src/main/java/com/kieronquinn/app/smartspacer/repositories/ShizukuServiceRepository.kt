@@ -215,13 +215,8 @@ class ShizukuServiceRepositoryImpl(
             }
             return@withTimeout ShizukuServiceResponse.Success(result)
         }
-        if(!Shizuku.pingBinder())
-            return@withTimeout ShizukuServiceResponse.Failed(FailureReason.NO_BINDER)
-        if(!requestPermission())
-            return@withTimeout ShizukuServiceResponse.Failed(FailureReason.PERMISSION_DENIED)
         val result = try {
-            block(getService()
-                ?: return@withTimeout ShizukuServiceResponse.Failed(FailureReason.NOT_AVAILABLE))
+            block(getService())
         }catch (e: RuntimeException){
             return@withTimeout ShizukuServiceResponse.Failed(FailureReason.NOT_AVAILABLE)
         }
@@ -338,7 +333,18 @@ class ShizukuServiceRepositoryImpl(
         }
     }
 
-    private suspend fun getService() = shizukuServiceLock.withLock {
+    /**
+     *  Graphite: the privileged service runs in this process, with the app's own system
+     *  permissions, instead of being started through Shizuku.
+     */
+    private val localService by lazy { SmartspacerShizukuService() }
+
+    private suspend fun getService(): ISmartspacerShizukuService {
+        shizukuService.emit(localService)
+        return localService
+    }
+
+    private suspend fun getShizukuService() = shizukuServiceLock.withLock {
         suspendCoroutine {
             var hasResumed = false
             val serviceConnection = object: ServiceConnection {

@@ -544,6 +544,7 @@ class Smartspacer: Application(), Configuration.Provider {
         if(isSafeMode()) return
         DynamicColors.applyToActivitiesIfAvailable(this)
         setupMonet()
+        GraphiteDefaults.applyOnce(this)
     }
 
     private fun createGson(): Gson {
