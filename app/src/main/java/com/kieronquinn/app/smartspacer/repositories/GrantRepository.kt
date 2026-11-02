@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
+const val GRAPHITE_LAUNCHER_PACKAGE = "app.lawnchair"
+
 interface GrantRepository {
 
     val grants: StateFlow<List<Grant>?>
@@ -36,6 +38,10 @@ class GrantRepositoryImpl(
                 oemSmartspace = true,
                 notifications = true
             )
+        }
+        if(packageName == GRAPHITE_LAUNCHER_PACKAGE){
+            //Graphite: the ROM's launcher shows At a Glance without asking
+            return Grant(packageName, smartspace = true)
         }
         return grants.firstNotNull().firstOrNull { it.packageName == packageName }
     }

@@ -8,6 +8,7 @@ import android.os.IBinder
 import android.os.RemoteException
 import com.kieronquinn.app.smartspacer.model.database.Grant
 import com.kieronquinn.app.smartspacer.repositories.DatabaseRepository
+import com.kieronquinn.app.smartspacer.repositories.GRAPHITE_LAUNCHER_PACKAGE
 import com.kieronquinn.app.smartspacer.sdk.client.ISmartspaceCallback
 import com.kieronquinn.app.smartspacer.sdk.client.ISmartspaceManager
 import com.kieronquinn.app.smartspacer.sdk.model.SmartspaceConfig
@@ -146,6 +147,10 @@ class SmartspaceManager(private val context: Context): ISmartspaceManager.Stub()
     }
 
     private fun getGrantForPackage(packageName: String) = runBlocking {
+        if(packageName == GRAPHITE_LAUNCHER_PACKAGE){
+            //Graphite: the ROM's launcher shows At a Glance without asking
+            return@runBlocking Grant(packageName, smartspace = true)
+        }
         databaseRepository.getGrantForPackage(packageName)
     }
 

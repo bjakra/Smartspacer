@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.smartspacer.BuildConfig
 import com.kieronquinn.app.smartspacer.R
 import com.kieronquinn.app.smartspacer.model.database.Grant
+import com.kieronquinn.app.smartspacer.repositories.GRAPHITE_LAUNCHER_PACKAGE
 import com.kieronquinn.app.smartspacer.repositories.DatabaseRepository
 import com.kieronquinn.app.smartspacer.repositories.SmartspaceRepository
 import com.kieronquinn.app.smartspacer.sdk.SmartspacerConstants.EXTRA_SMARTSPACER_ID
@@ -60,7 +61,8 @@ class ClientSmartspacerSession(
 
     private val permissions = databaseRepository.getGrants().map {
         it.firstOrNull { grant -> grant.packageName == config.packageName }
-            ?: Grant(config.packageName)
+            //Graphite: the ROM's launcher shows At a Glance without asking
+            ?: Grant(config.packageName, smartspace = config.packageName == GRAPHITE_LAUNCHER_PACKAGE)
     }.flowOn(Dispatchers.IO).stateIn(lifecycleScope, SharingStarted.Eagerly, null)
 
     override val targetCount = flowOf(config.smartspaceTargetCount)
